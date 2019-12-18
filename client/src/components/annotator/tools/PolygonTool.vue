@@ -180,7 +180,7 @@ export default {
       let last = this.polygon.path.lastSegment.point;
       let first = this.polygon.path.firstSegment.point;
 
-      let completeDistance = this.polygon.completeDistance;
+      let completeDistance = this.polygon.completeDistance*2.5;
       if (last.isClose(first, completeDistance)) {
         return this.complete();
       }
