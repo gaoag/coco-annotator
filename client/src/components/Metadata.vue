@@ -28,21 +28,38 @@
       >
         <div class="row" style="cell">
           <div class="col-sm">
-            <input
+            <!-- <input
               v-model="object.key"
               type="text"
               class="meta-input"
               :placeholder="keyTitle"
-            />
+            /> -->
+
+            <select name="metadata-types" 
+                v-model="object.key"
+                class="meta-input"
+                :placeholder="keyTitle">
+              <option v-for="metadataType in pairs" :key="metadataType.id" :value="metadataType">
+                {{metadataType.label}}</option>
+            </select>
+              <!-- <option value="landtype">Land Type</option>
+              <option value="roadtype">Road Type</option>
+              <option value="buildingtype">Building</option>
+            </select> -->
           </div>
 
           <div class="col-sm">
-            <input
-              v-model="object.value"
-              type="text"
-              class="meta-input"
-              :placeholder="valueTitle"
-            />
+            <select name="metadata-values"
+                v-model="object.value"
+                class="meta-input"
+                :placeholder="valueTitle">
+                <!-- <option v-for="option in keyValPairs[object.key].options">{{ option }}</option> -->
+                <option v-for="option in object.key.options" :key="option.id">
+                  {{ option }}
+                </option>
+  
+            </select>
+
           </div>
         </div>
       </li>
@@ -73,11 +90,49 @@ export default {
     exclude: {
       type: String,
       default: ""
-    }
+    },
+    validMetadataEntries:
+    {
+      type: Array,
+      default: () => {
+        return [
+          {
+            label:"Land Type",
+            options:["forest", "residential", "farm"]
+          },
+          {
+            label:"Building Type",
+            options:["home", "factory", "other"]
+          },
+          {
+            label:"Road Type",
+            options:["paved", "dirt", "big", "small"]
+          }
+        ]
+      }
+    },
   },
   data() {
     return {
-      metadataList: []
+      metadataList: [],
+      pairs:[
+      {
+        label:"Land Type",
+        options:["forest", "residential", "farm"]
+      },
+      {
+        label:"Building Type",
+        options:["home", "factory", "other"]
+      },
+      {
+        label:"Road Type",
+        options:["paved", "dirt", "big", "small"]
+      }
+    ],
+    
+    selectedDrink:-1,
+    selectedOption:''
+  
     };
   },
   methods: {
@@ -99,16 +154,28 @@ export default {
 
       return metadata;
     },
+
+    // appropriateValue(key, value) {
+    //   keyValPairs = {
+    //     "landtype": ["forest", "farm", "residential"],
+    //     "roadtype": ["paved", "dirt", "small", "big"],
+    //     "Building": ["home", "factory"]
+    //   }
+    //   return (keyValPairs[key].includes(value))
+    // },
+
     createMetadata() {
       this.metadataList.push({ key: "", value: "" });
     },
     loadMetadata() {
+      // this "watches" instances of new metadata
       if (this.metadata != null) {
         for (var key in this.metadata) {
           if (!this.metadata.hasOwnProperty(key)) continue;
           if (key === this.exclude) continue;
 
           let value = this.metadata[key];
+          // null out values for which the value is "invalid"
 
           if (value == null) value = "";
           else value = value.toString();
@@ -116,16 +183,25 @@ export default {
           this.metadataList.push({ key: key, value: value });
         }
       }
-    }
+    },
+    // displayMetadataValues() {
+
+    //   //programatically add in the desired elems, and filter out any elems which don't apply
+
+    //   // use jquery/raw javascript? how does this interact with the vue component?
+    // }
   },
   watch: {
     metadata() {
+      // this.displayMetadataValues();
       this.loadMetadata();
     }
   },
   created() {
     this.loadMetadata();
-  }
+  },
+  
+
 };
 </script>
 
