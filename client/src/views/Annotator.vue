@@ -433,12 +433,13 @@ export default {
         let delta = new paper.Point(0.5 * e.deltaY, 0);
         this.paper.view.setCenter(view.center.add(delta));
       } else {
+
         let viewPosition = view.viewToProject(
           new paper.Point(e.offsetX, e.offsetY)
         );
-
+        
         let transform = this.changeZoom(e.deltaY, viewPosition);
-
+        
         if (transform.zoom < 10 && transform.zoom > 0.01) {
           this.image.scale = 1 / transform.zoom;
           this.paper.view.zoom = transform.zoom;
@@ -465,7 +466,9 @@ export default {
     changeZoom(delta, p) {
       let oldZoom = this.paper.view.zoom;
       let c = this.paper.view.center;
-      let factor = 1 + this.zoom;
+      // let factor = (1 + this.zoom)
+      // console.log(factor)
+      let factor = 1.035
 
       let zoom = delta < 0 ? oldZoom * factor : oldZoom / factor;
       let beta = oldZoom / zoom;
