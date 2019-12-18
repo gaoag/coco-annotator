@@ -204,6 +204,8 @@ export default {
       } else {
         this.edit.canMove = false;
       }
+
+      
     },
     clear() {
       this.hover.category = null;
@@ -229,6 +231,7 @@ export default {
       this.point.indicator = true;
     },
     onMouseDrag(event) {
+      
       if(this.isBbox && this.moveObject){
         let delta_x = this.initPoint.x - event.point.x;
         let delta_y = this.initPoint.y - event.point.y;
@@ -253,6 +256,16 @@ export default {
         this.segment.point = event.point;
         
       }
+
+      else {
+        let delta_x = this.initPoint.x - event.point.x;
+        let delta_y = this.initPoint.y - event.point.y;
+        let center_delta = new paper.Point(delta_x, delta_y);
+        let new_center = this.$parent.paper.view.center.add(center_delta);
+        this.$parent.paper.view.setCenter(new_center);
+      }
+
+
     },
 
     onMouseUp(event){
@@ -260,6 +273,7 @@ export default {
     },
     
     onMouseMove(event) {
+      this.initPoint = event.point;
       let hitResult = this.$parent.paper.project.hitTest(
         event.point,
         this.hitOptions
