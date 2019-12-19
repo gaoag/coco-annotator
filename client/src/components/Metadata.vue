@@ -39,7 +39,7 @@
                 v-model="object.key"
                 class="meta-input"
                 :placeholder="keyTitle">
-              <option v-for="metadataType in pairs" :key="metadataType.id" :value="metadataType">
+              <option v-for="metadataType in validMetadataEntries" :key="metadataType.id" :value="metadataType">
                 {{metadataType.label}}</option>
             </select>
               <!-- <option value="landtype">Land Type</option>
