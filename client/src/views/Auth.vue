@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-sm text-left">
           <!-- Change this section to whatever you would like -->
-          <h1>COCO Annotator</h1>
+          <h1>Aerial History Project Annotator</h1>
           <hr />
           <div v-if="totalUsers === 0">
             <h3>You have successfully installed COCO Annotator!</h3>
@@ -24,14 +24,9 @@
           </div>
           <div v-else>
             <p>
-              COCO Annotator is a web-based image annotation tool designed for
-              versatility and efficiently label images to create training data
-              for image localization and object detection.
               <br /><br />
-              Login to create a datasets.
-              <br /><br />
-              Find out more
-              <a href="https://github.com/jsbroks/coco-annotator">Github</a>
+              Contact me here to report issues:
+              <a href="https://github.com/gaoag/coco-annotator">Github repo</a>
             </p>
           </div>
           <!-- End of section -->
