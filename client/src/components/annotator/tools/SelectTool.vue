@@ -103,7 +103,7 @@ export default {
         string += "Metadata \n";
         metadata.forEach(element => {
           if (element.key.length !== 0) {
-            string += " " + element.key + " = " + element.value + " \n";
+            string += " " + element.key.label + " = " + element.value + " \n";
           }
         });
       }
