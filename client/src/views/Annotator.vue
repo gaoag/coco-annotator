@@ -27,6 +27,13 @@
           ref="polygon"
         />
 
+        <LineTool
+          v-model="activeTool"
+          :scale="image.scale"
+          @setcursor="setCursor"
+          ref="line"
+        />
+
         <MagicWandTool
           v-model="activeTool"
           :width="image.raster.width"
@@ -42,6 +49,9 @@
           @setcursor="setCursor"
           ref="brush"
         />
+
+
+
         <EraserTool
           v-model="activeTool"
           :scale="image.scale"
@@ -169,6 +179,10 @@
             <PolygonPanel :polygon="$refs.polygon" />
           </div>
 
+          <div v-if="$refs.line != null">
+            <LinePanel :line="$refs.line" />
+          </div>
+
           <div v-if="$refs.select != null">
             <SelectPanel :select="$refs.select" />
           </div>
@@ -237,6 +251,7 @@ import BBoxTool from "@/components/annotator/tools/BBoxTool";
 import SelectTool from "@/components/annotator/tools/SelectTool";
 import MagicWandTool from "@/components/annotator/tools/MagicWandTool";
 import EraserTool from "@/components/annotator/tools/EraserTool";
+import LineTool from "@/components/annotator/tools/LineTool"
 import BrushTool from "@/components/annotator/tools/BrushTool";
 import KeypointTool from "@/components/annotator/tools/KeypointTool";
 import DEXTRTool from "@/components/annotator/tools/DEXTRTool";
@@ -257,6 +272,7 @@ import PolygonPanel from "@/components/annotator/panels/PolygonPanel";
 import BBoxPanel from "@/components/annotator/panels/BBoxPanel";
 import SelectPanel from "@/components/annotator/panels/SelectPanel";
 import MagicWandPanel from "@/components/annotator/panels/MagicWandPanel";
+import LinePanel from "@/components/annotator/panels/LinePanel";
 import BrushPanel from "@/components/annotator/panels/BrushPanel";
 import EraserPanel from "@/components/annotator/panels/EraserPanel";
 import KeypointPanel from "@/components/annotator/panels/KeypointPanel";
@@ -274,6 +290,7 @@ export default {
     BBoxTool,
     BBoxPanel,
     PolygonTool,
+    LineTool,
     PolygonPanel,
     SelectTool,
     MagicWandTool,
@@ -287,6 +304,7 @@ export default {
     CenterButton,
     SelectPanel,
     MagicWandPanel,
+    LinePanel,
     BrushPanel,
     EraserPanel,
     ModeButton,
@@ -376,6 +394,7 @@ export default {
           bbox: this.$refs.bbox.export(),
           polygon: this.$refs.polygon.export(),
           eraser: this.$refs.eraser.export(),
+          line: this.$refs.line.export(),
           brush: this.$refs.brush.export(),
           magicwand: this.$refs.magicwand.export(),
           select: this.$refs.select.export(),
@@ -569,6 +588,7 @@ export default {
       refs.polygon.setPreferences(preferences.polygon || {});
       refs.select.setPreferences(preferences.select || {});
       refs.magicwand.setPreferences(preferences.magicwand || {});
+      refs.line.setPreferences(preferences.line || {});
       refs.brush.setPreferences(preferences.brush || {});
       refs.eraser.setPreferences(preferences.eraser || {});
     },
